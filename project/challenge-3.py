@@ -31,7 +31,7 @@ def build_cost_trie(data_file_path: str) -> Trie:
     """
     # get number prefixes and costs from
     with open(data_file_path) as file:
-        lines = file.readlines()
+        lines = file.read().splitlines()
 
     trie = Trie()
     # iterates through list of phone number prefixes
@@ -39,9 +39,18 @@ def build_cost_trie(data_file_path: str) -> Trie:
     # line contains cost and phone number
     for line in lines:
         num, cost = line.split(',')
-        trie.insert(num, cost)
+        print(num)
+        trie.insert(num[1:], cost)
 
+    print('BELOW IS THE GOODS')
+    print(trie)
     return trie
 
+
 if __name__ == '__main__':
+    with open('../data/route-costs-100.txt') as file:
+        phone_numbers = [line.split(',')[0] for line in file.read().splitlines()]
     trie = build_cost_trie('../data/route-costs-100.txt')
+    print(trie)
+    print(find_call_cost(phone_numbers, trie))
+
