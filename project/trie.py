@@ -11,6 +11,9 @@ class TrieNode:
         self.children = [None]*10
         self.cost = None
 
+    def __repr__(self):
+        return f"NODE({self.children})"
+
 class Trie:
 
     def __init__(self):
@@ -26,9 +29,12 @@ class Trie:
         node = self.root
         # iterate over to keep appending numbers to tree 
         for num in phone_number:
+            num = int(num)
+            print(node)
             if node.children[num] is None:
                 node.children[num] = TrieNode()
             node = node.children[num]
+
         if node.cost is not None:
             if cost > node.cost:
                 return
@@ -42,13 +48,11 @@ class Trie:
         cost = 0
         # traverse down tree by each digit in phone number
         for num in phone_number:
-            if self.children[num] is not None:
-                node = self.children[num]
+            num = int(num)
+            if node.children[num] is not None:
+                node = node.children[num]
                 if node.cost is not None:
                     cost = node.cost
-            else:
-                return False
-
         # return the cost at node if there is one
         # if not return the stored cost from higher up in tree
         return node.cost if node.cost is not None else cost
