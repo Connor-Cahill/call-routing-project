@@ -39,6 +39,20 @@ class Trie:
         Searches for a phone number in trie and returns cost
         """
         node = self.root
+        cost = 0
+        # traverse down tree by each digit in phone number
+        for num in phone_number:
+            if self.children[num] is not None:
+                node = self.children[num]
+                if node.cost is not None:
+                    cost = node.cost
+            else:
+                return False
+
+        # return the cost at node if there is one
+        # if not return the stored cost from higher up in tree
+        return node.cost if node.cost is not None else cost
+
 
 
 
