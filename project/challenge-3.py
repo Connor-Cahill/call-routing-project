@@ -67,13 +67,12 @@ if __name__ == '__main__':
     #stopwatch.mark("Unpickling Trie:")
     trie = pickle.load(open('trie.pickle', 'rb'))
 
-    stopwatch.mark("Reading test input")
-
-    numbers = (number for number in open(
-        'data/phone-numbers-1000.txt').readlines())
+    #stopwatch.mark("Reading test input")
 
     #stopwatch.mark("Test with 1,000 numbers:")
-    with open('data/results.txt', 'w') as out:
+    with open('data/results-3.txt', 'w') as out:
+        numbers = (number for number in open(
+            'data/phone-numbers-10000.txt').read().splitlines())
         for number in numbers:
             cost = trie.search(number)
             out.write(f'{number},{cost}\n')
