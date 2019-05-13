@@ -1,6 +1,11 @@
 #!python
 
 from trie import Trie
+import datetime
+import pickle
+from stopwatch import StopWatch
+
+stopwatch = StopWatch()
 
 
 def clean_input(phone_number: str) -> str:
@@ -23,34 +28,54 @@ def find_call_cost(phone_numbers: [str], trie: Trie) -> [str]:
     return costs_list
 
 
-
 def build_cost_trie(data_file_path: str) -> Trie:
     """
     Given path to data file will return a trie
     with cost of prefix
     """
     # get number prefixes and costs from
-    with open(data_file_path) as file:
-        lines = file.read().splitlines()
+    #lines = numbers_and_costs_from(data_file_path)
 
     trie = Trie()
     # iterates through list of phone number prefixes
     # inserting them into our trie
     # line contains cost and phone number
-    for line in lines:
-        num, cost = line.split(',')
-        print(num)
-        trie.insert(num[1:], cost)
 
-    print('BELOW IS THE GOODS')
-    print(trie)
+    stopwatch.mark("Tokenizing input")
+    with open(data_file_path, 'r') as f:
+        lines = (l.split(',') for l in f.readlines())
+
+    stopwatch.mark("Building cost trie")
+    for num, cost in lines:
+        trie.insert(num[1:], float(cost))
+
     return trie
 
 
 if __name__ == '__main__':
-    with open('../data/route-costs-100.txt') as file:
-        phone_numbers = [line.split(',')[0] for line in file.read().splitlines()]
-    trie = build_cost_trie('../data/route-costs-100.txt')
-    print(trie)
-    print(find_call_cost(phone_numbers, trie))
 
+    data_file_path = 'data/route-costs-10000000.txt'
+
+    # stopwatch.mark("Starting to build trie")
+    # trie = build_cost_trie(data_file_path)
+
+    # stopwatch.mark("Starting to pickle")
+    # pickle.dump(trie, open('trie.pickle', 'wb'))
+
+    # stopwatch.mark("Reading test input numbers")
+
+    #stopwatch.mark("Unpickling Trie:")
+    trie = pickle.load(open('trie.pickle', 'rb'))
+
+    stopwatch.mark("Reading test input")
+
+    numbers = (number for number in open(
+        'data/phone-numbers-1000.txt').readlines())
+
+    #stopwatch.mark("Test with 1,000 numbers:")
+    with open('data/results.txt', 'w') as out:
+        for number in numbers:
+            cost = trie.search(number)
+            out.write(f'{number},{cost}\n')
+
+    # stopwatch.end()

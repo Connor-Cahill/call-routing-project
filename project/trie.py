@@ -1,9 +1,11 @@
 #!python
 
+
 class TrieNode:
     """
         TrieNode is the node for our Trie Class
     """
+
     def __init__(self):
         """
         Initializes new TrieNode
@@ -14,6 +16,7 @@ class TrieNode:
     def __repr__(self):
         return f"NODE({self.children})"
 
+
 class Trie:
 
     def __init__(self):
@@ -22,15 +25,14 @@ class Trie:
         """
         self.root = TrieNode()
 
-    def insert(self, phone_number: str, cost: int):
+    def insert(self, phone_number: str, cost: float):
         """
         Inserts new item into trie
         """
         node = self.root
-        # iterate over to keep appending numbers to tree 
+        # iterate over to keep appending numbers to tree
         for num in phone_number:
             num = int(num)
-            print(node)
             if node.children[num] is None:
                 node.children[num] = TrieNode()
             node = node.children[num]
@@ -44,6 +46,9 @@ class Trie:
         """
         Searches for a phone number in trie and returns cost
         """
+        if phone_number[0] == "+":  # Clean input
+            phone_number = phone_number[1:]
+
         node = self.root
         cost = 0
         # traverse down tree by each digit in phone number
@@ -56,8 +61,3 @@ class Trie:
         # return the cost at node if there is one
         # if not return the stored cost from higher up in tree
         return node.cost if node.cost is not None else cost
-
-
-
-
-
