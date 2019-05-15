@@ -8,13 +8,16 @@ from stopwatch import StopWatch
 stopwatch = StopWatch()
 
 
-def clean_input(phone_number: str) -> str:
-    pass
-
-
 def find_call_cost(phone_numbers: [str], trie: Trie) -> [str]:
     """
-    Given a list of phone numbers that
+    Given list of phone numbers and trie will return
+    list of costs for calling numbers
+
+    Params:
+    phone_numbers: array of strings that are phone numbers
+    phone number format --> +19131232342
+
+    trie: a trie containing phone number prefix, cost data
     """
     costs_list = []
     # iterate over phone numbers
@@ -32,9 +35,13 @@ def build_cost_trie(data_file_path: str) -> Trie:
     """
     Given path to data file will return a trie
     with cost of prefix
+
+    Params:
+    data_file_path: string of path to file with
+    phone number prefix, cost data
     """
     # get number prefixes and costs from
-    #lines = numbers_and_costs_from(data_file_path)
+    # lines = numbers_and_costs_from(data_file_path)
 
     trie = Trie()
     # iterates through list of phone number prefixes
@@ -64,12 +71,12 @@ if __name__ == '__main__':
 
     # stopwatch.mark("Reading test input numbers")
 
-    #stopwatch.mark("Unpickling Trie:")
+    # stopwatch.mark("Unpickling Trie:")
     trie = pickle.load(open('trie.pickle', 'rb'))
 
-    #stopwatch.mark("Reading test input")
+    # stopwatch.mark("Reading test input")
 
-    #stopwatch.mark("Test with 1,000 numbers:")
+    # stopwatch.mark("Test with 1,000 numbers:")
     with open('data/results-3.txt', 'w') as out:
         numbers = (number for number in open(
             'data/phone-numbers-10000.txt').read().splitlines())
