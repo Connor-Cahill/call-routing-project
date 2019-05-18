@@ -63,6 +63,7 @@ def build_cost_trie(data_file_path: str) -> Trie:
 if __name__ == '__main__':
 
     data_file_path = 'data/route-costs-10000000.txt'
+    print("This should take roughly a minute...")
 
     # =============== Uncomment to benchmark building the trie =============
     #
@@ -93,4 +94,7 @@ if __name__ == '__main__':
     #         out.write(f'{number},{cost}\n')
     #
     # ======================================================================
-    stopwatch.end()
+
+    stopwatch.end()  # Can whoever grades this help me figure out why my stopwatch
+    # output is delayed until the whole program is finished ??? I programmed it to
+    # print during each mark's execution :(
