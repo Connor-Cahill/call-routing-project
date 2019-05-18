@@ -8,9 +8,10 @@ class StopWatch:
         self.current_marker_time = None
 
     def mark(self, message):
-        print(">", message, end=" ")
         if self.current_marker is not None:
             print(datetime.now() - self.current_marker_time)
+
+        print(">", message, end=" ")
 
         self.current_marker = message
         self.current_marker_time = datetime.now()

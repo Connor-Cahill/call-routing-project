@@ -8,10 +8,6 @@ from stopwatch import StopWatch
 stopwatch = StopWatch()
 
 
-def clean_input(phone_number: str) -> str:
-    pass
-
-
 def find_call_cost(phone_numbers: [str], trie: Trie) -> [str]:
     """
     Given a list of phone numbers that
@@ -20,6 +16,7 @@ def find_call_cost(phone_numbers: [str], trie: Trie) -> [str]:
     # iterate over phone numbers
     # running trie search command on each one
     # append the cost returned from search class into cost list
+
     for number in phone_numbers:
         num = number[1:]
         cost = trie.search(num)
@@ -64,17 +61,20 @@ if __name__ == '__main__':
 
     # stopwatch.mark("Reading test input numbers")
 
-    #stopwatch.mark("Unpickling Trie:")
+    stopwatch.mark("Unpickling Trie:")
     trie = pickle.load(open('trie.pickle', 'rb'))
 
-    #stopwatch.mark("Reading test input")
+    stopwatch.mark("Reading 10,000 phone numbers from file:")
+    phone_numbers = open("data/phone-numbers-10000.txt").read().splitlines()
 
-    #stopwatch.mark("Test with 1,000 numbers:")
-    with open('data/results-3.txt', 'w') as out:
-        numbers = (number for number in open(
-            'data/phone-numbers-10000.txt').read().splitlines())
-        for number in numbers:
-            cost = trie.search(number)
-            out.write(f'{number},{cost}\n')
+    stopwatch.mark(f"Getting costs for {len(phone_numbers)} phone numbers:")
+    find_call_cost(phone_numbers, trie)
 
-    # stopwatch.end()
+    # with open('data/results-3.txt', 'w') as out:
+    #     numbers = (number for number in open(
+    #         'data/phone-numbers-10000.txt').read().splitlines())
+    #     for number in numbers:
+    #         cost = trie.search(number)
+    #         out.write(f'{number},{cost}\n')
+
+    stopwatch.end()
