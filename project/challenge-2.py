@@ -1,4 +1,11 @@
-def get_cost_dict(costs_file_path):
+def get_cost_dict(costs_file_path: str) -> dict:
+    """
+    Given path to costs data file will return a dictionary
+    with phone number prefix, cost pair
+
+    Params:
+    costs_file_path: path to file (string)
+    """
     with open(costs_file_path, 'r') as f:
         numbers_costs = (l.split(',') for l in f.read().splitlines())
     costs = {}
@@ -12,7 +19,16 @@ def get_cost_dict(costs_file_path):
 
 
 def search_number(costs_dict: dict, number: str) -> float:
-    """Returns cost of calling given number. If the number is not found, returns 0.0"""
+    """
+    Returns cost of calling given number.
+    If the number is not found, returns 0.0
+
+    Params:
+    costs_dict: dictionary containing phone number prefix, costs
+    key value pair
+
+    number: phone number that will be searching for cost for
+    """
     while number not in costs_dict and len(number) > 0:
         number = number[:-1]
 
@@ -20,8 +36,21 @@ def search_number(costs_dict: dict, number: str) -> float:
 
 
 def get_all_costs(costs_dict, input_file_path: str, output_file_path: str):
+    """
+    Will return costs for all phone numbers in input file
 
-    test_numbers = open(input_file_path).read().splitlines()
+    Params:
+    costs_dict: dictionary containing number prefix, cost data
+
+    input_file_path: path to input file with valid phone numbers (string)
+    # Format (+1913123434)
+
+    output_file_path: path to to file where outputted phonenumber, cost
+    data will be written
+    """
+
+    with open(input_file_path) as f:
+        test_numbers = f.read().splitlines()
 
     with open(output_file_path, 'w') as out:
         for number in test_numbers:
