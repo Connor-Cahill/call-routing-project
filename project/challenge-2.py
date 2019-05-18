@@ -59,7 +59,14 @@ def get_all_costs(costs_dict, input_file_path: str, output_file_path: str):
 
 
 if __name__ == '__main__':
+    from stopwatch import StopWatch
+    watch = StopWatch()
+
+    watch.mark("Compiling 10,000,000 route costs into dictionary:")
     costs_dict = get_cost_dict("data/route-costs-10000000.txt")
+
+    watch.mark("Getting costs for 1,000 numbers and storing in results file:")
     get_all_costs(costs_dict,
                   'data/phone-numbers-1000.txt',
                   'data/results-2.txt')
+    watch.end()
